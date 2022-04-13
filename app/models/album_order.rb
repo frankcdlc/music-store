@@ -1,0 +1,2 @@
+class AlbumOrder < ApplicationRecord
+end
