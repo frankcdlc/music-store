@@ -4,7 +4,7 @@ class CreateArtists < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :nationality
       t.date :birth_date
-      t.string :death_date
+      t.date :death_date
 
       t.timestamps
     end
