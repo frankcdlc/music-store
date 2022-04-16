@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :customer
   has_many :albums
+  has_many :album_order
   validates :total, comparison: { greater_than: 0 }
   validate :date_buy
 
