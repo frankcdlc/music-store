@@ -24,12 +24,15 @@ require 'faker'
 end
 
 # ALBUM Create between 2 to 6 albums for each artist. -> deberia estar adentro de la anterior iteracion?
+sorted_artist = Artist.all.shuffle # creado para guardar las instancais
+# song_duration = []
+# 160.times { |n| song_duration.push(Faker::Number.between(from: 120, to: 300))}
 40.times do |n| 
   album = Album.new(
     name: Faker::Music.album,
     price: Faker::Number.number(digits: 2), # deberia ser con decimnales??????
-    # duratioen: 
-    artist_id: Artist.find((n/4)+1).id
+    # duration:   # ->>>>>>>>>>>>>> DEPENDE DE OTRO VALOR que se debe agregar despues, entonces como ahcermos 
+    artist_id: sorted_artist[(n/4)].id
   )
   if album.save
     puts "Album#{n+1} created successfully"
@@ -38,15 +41,14 @@ end
   end
 end
 
-# TALVEZ GRATEFULDEADD PUEDE SER OTRO NOMBRE???????????? 
-
 # SONG # Create between 4 and 10 songs for each album, necesitro la instancia de cada album
-
+sorted_albums = Album.all.shuffle
 160.times do |n|
   song = Song.new(
     name: Faker::Music::GratefulDead.song,
     duration: Faker::Number.between(from: 120, to: 300), # en segundos 
-    album_id: Album.find((n/4)+1).id
+    # album_id: Album.find((n/4)+1).id
+    album_id: sorted_albums[(n/4)].id
   )
   if song.save
     puts "Song#{n+1} created successfully"
@@ -75,11 +77,14 @@ end
 
 
 # # ORDER # Create between 1 and 5 orders for each customer. 
-20.times do |n|
+sorted_customer = Customer.all.shuffle
+
+30.times do |n| 
   order = Order.new(
     date: Faker::Date.between(from: 120.year.ago, to: Date.today), # TRHIS CAN BE INPROVED
     total: Faker::Number.decimal(l_digits: 2), #=> 11.88 esto debe ser un decimal-> puede denpender de albumn order y album price but idk how
-    customer_id: Customer.all.find(((n/2)+1)).id
+    # customer_id: Customer.all.find(((n/2)+1)).id
+    customer_id: sorted_customer[(n/2)].id
   )
   if order.save
     puts "Order#{n+1} created successfully"
@@ -88,6 +93,19 @@ end
   end
 end
 
+# Order.all
+# sorted_albums = Album.all.shuffle
+60.times do |n| 
+  album_order = AlbumOrder.new(
+    album_id: sorted_albums[n/4].id, # creo que cualquier valor
+    order_id: Order.all.find((n/2)+1).id # 2 por comprador
+  )
+  if album_order.save
+    puts "album_order#{n+1} created successfully"
+  else
+    puts "album_order#{n+1} #{album_order.errors.full_messages.join(", ")}"
+  end
+end
 
 
 
