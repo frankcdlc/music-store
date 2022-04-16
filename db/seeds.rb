@@ -81,39 +81,43 @@ end
     active_flag: false # ???????????????????????? ACTIVE FLAG DEFAULT FALSE????
   )
   if costumer.save
-    Rails.logger.debug { "Costumer#{n + 1} created successfully" }
+    puts "Costumer#{n+1} created successfully"
   else
-    Rails.logger.debug { "Costumer#{n + 1} #{costumer.errors.full_messages.join(', ')}" }
+    puts "Costumer#{n+1} #{costumer.errors.full_messages.join(", ")}"
   end
 end
 
-# # ORDER # Create between 1 and 5 orders for each customer.
+
+# # ORDER # Create between 1 and 5 orders for each customer. 
 sorted_customer = Customer.all.shuffle
 
-30.times do |n|
+30.times do |n| 
   order = Order.new(
-    date: Faker::Date.between(from: 120.years.ago, to: Date.today), # TRHIS CAN BE INPROVED
+    date: Faker::Date.between(from: 120.year.ago, to: Date.today), # TRHIS CAN BE INPROVED
     total: Faker::Number.decimal(l_digits: 2), #=> 11.88 esto debe ser un decimal-> puede denpender de albumn order y album price but idk how
     # customer_id: Customer.all.find(((n/2)+1)).id
-    customer_id: sorted_customer[(n / 2)].id
+    customer_id: sorted_customer[(n/2)].id
   )
   if order.save
-    Rails.logger.debug { "Order#{n + 1} created successfully" }
+    puts "Order#{n+1} created successfully"
   else
-    Rails.logger.debug { "Order#{n + 1} #{order.errors.full_messages.join(', ')}" }
+    puts "Order#{n+1} #{order.errors.full_messages.join(", ")}"
   end
 end
 
 # Order.all
 # sorted_albums = Album.all.shuffle
-60.times do |n|
+60.times do |n| 
   album_order = AlbumOrder.new(
-    album_id: sorted_albums[n / 4].id, # creo que cualquier valor
-    order_id: Order.all.find((n / 2) + 1).id # 2 por comprador
+    album_id: sorted_albums[n/4].id, # creo que cualquier valor
+    order_id: Order.all.find((n/2)+1).id # 2 por comprador
   )
   if album_order.save
-    Rails.logger.debug { "album_order#{n + 1} created successfully" }
+    puts "album_order#{n+1} created successfully"
   else
-    Rails.logger.debug { "album_order#{n + 1} #{album_order.errors.full_messages.join(', ')}" }
+    puts "album_order#{n+1} #{album_order.errors.full_messages.join(", ")}"
   end
 end
+
+
+
