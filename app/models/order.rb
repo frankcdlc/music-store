@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   validate :date_buy
 
   def date_buy
-    if birth_date.present? &&  date > Date.today
+    if date.present? &&  date > Date.today
       errors.add(:date, message: 'the date cannot be in the future')
     end
   end
